@@ -11,6 +11,7 @@ namespace Lab_8_tooni_mashin
 
         double firstNumber = 0;   // эхний тоо
         string operation = "";    // сонгосон үйлдэл (+, -, *, /)
+        double memory = 0;        // санах ойд хадгалсан тоо
         bool startNew = true;     // true бол дараагийн тоо шинээр эхэлнэ
 
         public Form1()
@@ -90,6 +91,28 @@ namespace Lab_8_tooni_mashin
             else if (text == "1/x")
             {
                 Reciprocal();
+            }
+            else if (text == "MC")
+            {
+                memory = 0;
+                UpdateMemory();
+            }
+            else if (text == "MR")
+            {
+                ShowNumber(memory);
+                startNew = true;
+            }
+            else if (text == "MS")
+            {
+                memory = GetNumber();
+                startNew = true;
+                UpdateMemory();
+            }
+            else if (text == "M+")
+            {
+                memory = memory + GetNumber();
+                startNew = true;
+                UpdateMemory();
             }
         }
 
@@ -275,6 +298,19 @@ namespace Lab_8_tooni_mashin
             }
             ShowNumber(1 / number);
             startNew = true;
+        }
+
+        // ---------- Санах ой ----------
+        private void UpdateMemory()
+        {
+            if (memory != 0)
+            {
+                memLabel.Text = "M";
+            }
+            else
+            {
+                memLabel.Text = "";
+            }
         }
     }
 }
