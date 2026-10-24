@@ -62,6 +62,23 @@ namespace Lab_8_tooni_mashin
             {
                 PressEquals();
             }
+            else if (text == "Backspace")
+            {
+                Backspace();
+            }
+            else if (text == "CE")
+            {
+                display.Text = "0";
+                startNew = true;
+            }
+            else if (text == "C")
+            {
+                ClearAll();
+            }
+            else if (text == "+/-")
+            {
+                ChangeSign();
+            }
         }
 
         // ---------- Тоо оруулах ----------
@@ -174,6 +191,39 @@ namespace Lab_8_tooni_mashin
             operation = "";
             startNew = true;
             display.Text = "0";
+        }
+
+        // ---------- Цэвэрлэх, тэмдэг солих ----------
+        private void Backspace()
+        {
+            if (startNew == true)
+            {
+                return;
+            }
+
+            if (display.Text.Length > 1)
+            {
+                // сүүлийн тэмдэгтийг хасна
+                display.Text = display.Text.Substring(0, display.Text.Length - 1);
+            }
+            else
+            {
+                display.Text = "0";
+            }
+
+            if (display.Text == "-")
+            {
+                display.Text = "0";
+            }
+        }
+
+        private void ChangeSign()
+        {
+            double number = GetNumber();
+            if (number != 0)
+            {
+                ShowNumber(-number);
+            }
         }
     }
 }
