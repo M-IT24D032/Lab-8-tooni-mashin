@@ -79,6 +79,18 @@ namespace Lab_8_tooni_mashin
             {
                 ChangeSign();
             }
+            else if (text == "sqrt")
+            {
+                SquareRoot();
+            }
+            else if (text == "%")
+            {
+                Percent();
+            }
+            else if (text == "1/x")
+            {
+                Reciprocal();
+            }
         }
 
         // ---------- Тоо оруулах ----------
@@ -224,6 +236,45 @@ namespace Lab_8_tooni_mashin
             {
                 ShowNumber(-number);
             }
+        }
+
+        // ---------- sqrt, %, 1/x ----------
+        private void SquareRoot()
+        {
+            double number = GetNumber();
+            if (number < 0)
+            {
+                MessageBox.Show("Сөрөг тооноос язгуур гарахгүй!");
+                return;
+            }
+            ShowNumber(Math.Sqrt(number));
+            startNew = true;
+        }
+
+        private void Percent()
+        {
+            if (operation != "")
+            {
+                // жишээ нь 200 + 10 % -> 10 нь 200-ийн 10% буюу 20 болно
+                ShowNumber(firstNumber * GetNumber() / 100);
+            }
+            else
+            {
+                ShowNumber(0);
+            }
+            startNew = true;
+        }
+
+        private void Reciprocal()
+        {
+            double number = GetNumber();
+            if (number == 0)
+            {
+                MessageBox.Show("Тэгд хувааж болохгүй!");
+                return;
+            }
+            ShowNumber(1 / number);
+            startNew = true;
         }
     }
 }
