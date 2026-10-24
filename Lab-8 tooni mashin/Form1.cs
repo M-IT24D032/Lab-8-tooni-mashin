@@ -9,6 +9,8 @@ namespace Lab_8_tooni_mashin
         TextBox display;      // тоо харагдах талбар
         Label memLabel;       // санах ойн "M" тэмдэг (label1)
 
+        double firstNumber = 0;   // эхний тоо
+        string operation = "";    // сонгосон үйлдэл (+, -, *, /)
         bool startNew = true;     // true бол дараагийн тоо шинээр эхэлнэ
 
         public Form1()
@@ -52,6 +54,14 @@ namespace Lab_8_tooni_mashin
             {
                 AddDot();
             }
+            else if (text == "+" || text == "-" || text == "*" || text == "/")
+            {
+                PressOperator(text);
+            }
+            else if (text == "=")
+            {
+                PressEquals();
+            }
         }
 
         // ---------- Тоо оруулах ----------
@@ -86,6 +96,84 @@ namespace Lab_8_tooni_mashin
             {
                 display.Text = display.Text + ".";
             }
+        }
+
+        // ---------- Тоог унших, харуулах ----------
+        // Дэлгэц дээрх бичвэрийг тоо болгоно
+        // (InvariantCulture нь цэгийг таслал гэж андуурахгүйн тулд)
+        private double GetNumber()
+        {
+            return double.Parse(display.Text, CultureInfo.InvariantCulture);
+        }
+
+        // Тоог дэлгэц дээр харуулна
+        private void ShowNumber(double number)
+        {
+            display.Text = number.ToString(CultureInfo.InvariantCulture);
+        }
+
+        // ---------- Үйлдлүүд ----------
+        private void PressOperator(string op)
+        {
+            // өмнө нь үйлдэл сонгосон бол эхлээд тооцоолно (жишээ нь 2 + 3 +)
+            if (operation != "" && startNew == false)
+            {
+                Calculate();
+            }
+
+            firstNumber = GetNumber();
+            operation = op;
+            startNew = true;
+        }
+
+        private void PressEquals()
+        {
+            if (operation != "")
+            {
+                Calculate();
+                operation = "";
+            }
+            startNew = true;
+        }
+
+        // firstNumber ба дэлгэц дээрх тоон дээр үйлдлийг хийнэ
+        private void Calculate()
+        {
+            double secondNumber = GetNumber();
+            double result = 0;
+
+            if (operation == "+")
+            {
+                result = firstNumber + secondNumber;
+            }
+            else if (operation == "-")
+            {
+                result = firstNumber - secondNumber;
+            }
+            else if (operation == "*")
+            {
+                result = firstNumber * secondNumber;
+            }
+            else if (operation == "/")
+            {
+                if (secondNumber == 0)
+                {
+                    MessageBox.Show("Тэгд хувааж болохгүй!");
+                    ClearAll();
+                    return;
+                }
+                result = firstNumber / secondNumber;
+            }
+
+            ShowNumber(result);
+        }
+
+        private void ClearAll()
+        {
+            firstNumber = 0;
+            operation = "";
+            startNew = true;
+            display.Text = "0";
         }
     }
 }
