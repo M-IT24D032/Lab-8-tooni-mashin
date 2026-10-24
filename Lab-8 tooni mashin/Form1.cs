@@ -39,6 +39,11 @@ namespace Lab_8_tooni_mashin
             display.TextAlign = HorizontalAlignment.Right;
             display.Text = "0";
             memLabel.Text = "";
+
+            // Гараас оруулахын тулд
+            this.KeyPreview = true;
+            this.KeyPress += Form1_KeyPress;
+            this.KeyDown += Form1_KeyDown;
         }
 
         // Аль ч товч дарахад энэ method ажиллана
@@ -310,6 +315,41 @@ namespace Lab_8_tooni_mashin
             else
             {
                 memLabel.Text = "";
+            }
+        }
+
+        // ---------- Гараас оруулах ----------
+        private void Form1_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            char key = e.KeyChar;
+
+            if (key >= '0' && key <= '9')
+            {
+                AddDigit(key.ToString());
+            }
+            else if (key == '.')
+            {
+                AddDot();
+            }
+            else if (key == '+' || key == '-' || key == '*' || key == '/')
+            {
+                PressOperator(key.ToString());
+            }
+            else if (key == '=' || key == '\r')
+            {
+                PressEquals();
+            }
+        }
+
+        private void Form1_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Back)
+            {
+                Backspace();
+            }
+            else if (e.KeyCode == Keys.Escape)
+            {
+                ClearAll();
             }
         }
     }
